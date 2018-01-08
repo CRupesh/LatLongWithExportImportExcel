@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.rupeshc.latlonggeocode.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnGetLatLng"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Get Lat-Lang"
+            android:layout_weight="3"/>
+
+        <Button
+            android:id="@+id/btnReadExcel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Read Excel"
+            android:layout_weight="3"/>
+
+        <Button
+            android:id="@+id/btnExportExcel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Write Excel"
+            android:layout_weight="3"/>
+
+    </LinearLayout>
+
+
+    <EditText
+        android:id="@+id/edt_addrs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/txt_Lat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Lattitude: "
+        android:typeface="serif"
+        android:textSize="16dp"
+        android:textColor="#000000"/>
+
+    <TextView
+        android:id="@+id/txt_Long"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Longitude: "
+        android:typeface="serif"
+        android:textSize="16dp"
+        android:textColor="#000000"/>
+
+</LinearLayout>
