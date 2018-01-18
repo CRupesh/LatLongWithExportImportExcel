@@ -39,13 +39,23 @@ public class DBHandler extends SQLiteOpenHelper {
             + DBBuilder.UserTable.LASTUPDATED_DTS + " VARCHAR(5000),"
             + DBBuilder.UserTable.CUST_ID + " VARCHAR(5000))";
 
+    public String Create_Dumy_Tbl = "CREATE TABLE " + DBBuilder.dumyTableName +
+            " (" + DBBuilder.DumyTable.PartnerName+ " VARCHAR(50), "
+            + DBBuilder.DumyTable.EmployeeId + " VARCHAR(50), "
+            + DBBuilder.DumyTable.Pincode+ " VARCHAR(10), "
+            + DBBuilder.DumyTable.PartnerAddress+ " VARCHAR(10), "
+            + DBBuilder.DumyTable.Latitude+ " VARCHAR(500), "
+            + DBBuilder.DumyTable.Longitude+ " VARCHAR(500))";
+
     public String Delete_User_Tbl = "delete from " + DBBuilder.userTableName;
+    public String Delete_Dumy_Tbl = "delete from " + DBBuilder.dumyTableName;
 
 
 
 
     public interface DBBuilder {
         String userTableName = "UserTable";
+        String dumyTableName = "dumyTable";
 
         interface UserTable {
             String GEOCODE_ID = "GEOCODE_ID";
@@ -57,6 +67,15 @@ public class DBHandler extends SQLiteOpenHelper {
             String STATE = "STATE";
             String LASTUPDATED_DTS = "LASTUPDATED_DTS";
             String CUST_ID = "CUST_ID";
+        }
+
+        interface DumyTable {
+            String PartnerName= "PartnerName";
+            String EmployeeId= "EmployeeId";
+            String Pincode = "Pincode";
+            String PartnerAddress = "PartnerAddress";
+            String Latitude = "Latitude";
+            String Longitude = "Longitude";
         }
 
     }
@@ -120,6 +139,7 @@ public class DBHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         try {
             sqLiteDatabase.execSQL(Create_User_Tbl);
+            sqLiteDatabase.execSQL(Create_Dumy_Tbl);
         }
         catch (Exception e){
             Log.e("","Error="+e.toString());
@@ -134,6 +154,28 @@ public class DBHandler extends SQLiteOpenHelper {
 
     public void FlushDatabase() {
         db.execSQL(Delete_User_Tbl);
+        db.execSQL(Delete_Dumy_Tbl);
+    }
+
+    public void insertDumyMaster(String PartnerName, String EmployeeId, String Pincode, String PartnerAddress, String Latitude,
+                                  String Longitude) {
+        try {
+
+            insert(new String[]{PartnerName, EmployeeId, Pincode, PartnerAddress, Latitude, Longitude},
+                    new String[]{DBBuilder.DumyTable.PartnerName, DBBuilder.DumyTable.EmployeeId,
+                            DBBuilder.DumyTable.Pincode, DBBuilder.DumyTable.PartnerAddress,
+                            DBBuilder.DumyTable.Latitude,DBBuilder.DumyTable.Longitude},
+                    DBBuilder.dumyTableName);
+
+            Cursor cursor = db.rawQuery("select * from "+DBBuilder.dumyTableName,null);
+            for (cursor.moveToFirst();!cursor.isAfterLast();cursor.moveToNext()){
+                Log.e("","Count="+cursor.getCount());
+            }
+            Log.e("","Count="+cursor.getCount());
+            //deleteUserMaster();
+        } catch (Exception e) {
+            Log.e("","Error="+e.toString());
+        }
     }
 
 
@@ -156,8 +198,15 @@ public class DBHandler extends SQLiteOpenHelper {
         }
     }
 
+
+
     public Cursor GetAllLatLong() {
         Cursor cur = fetch(DBBuilder.userTableName, null, null,null, null, null, true, null, null);
+        return cur;
+    }
+
+    public Cursor GetAllDummyLatLong() {
+        Cursor cur = fetch(DBBuilder.dumyTableName, null, null,null, null, null, true, null, null);
         return cur;
     }
 
